@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,30 +11,113 @@
       theme: {
         extend: {
           colors: {
-            brand: {
-              50: '#f0fdf4',
-              100: '#dcfce7',
-              500: '#10b981',
-              600: '#059669',
-              700: '#047857',
+            palette: {
+              deepTeal: '#668586',
+              tropicalTeal: '#82AEB1',
+              skyBlue: '#93C6D6',
+              periwinkle: '#A7ACD9',
+              lilacAsh: '#9E8FB2',
+              softBg: '#F4F6F8',
+              cardBg: '#FFFFFF'
             }
           }
         }
       }
     }
   </script>
+  <!-- Inline script to prevent theme flash on load -->
+  <script>
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Scroll Reveal with Color Shift */
     .reveal {
       opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(28px) scale(0.98);
+      filter: saturate(0.3);
+      transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .reveal.active {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
+      filter: saturate(1);
     }
 
+    /* Hero Geometric Card Stacking */
+    .hero-card-1 {
+      transform: rotate(-6deg) translateY(0px);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .hero-card-2 {
+      transform: rotate(8deg) translateY(0px);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .hero-container:hover .hero-card-1 {
+      transform: rotate(-10deg) translateY(-12px) scale(1.02);
+    }
+    .hero-container:hover .hero-card-2 {
+      transform: rotate(12deg) translateY(8px) scale(1.03);
+    }
+
+    /* Hover Color Card Glows */
+    .color-hover-card {
+      position: relative;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .color-hover-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 1.5rem;
+      padding: 2px;
+      background: linear-gradient(135deg, #82AEB1, #93C6D6, #A7ACD9);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .color-hover-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 30px -10px rgba(130, 174, 177, 0.25);
+    }
+    .color-hover-card:hover::before {
+      opacity: 1;
+    }
+
+    /* Skill Chip Gradient Animation */
+    .skill-chip {
+      cursor: pointer;
+      transition: all 0.3s ease;
+      user-select: none;
+      background-size: 200% 100%;
+    }
+    .skill-chip:hover {
+      background-image: linear-gradient(135deg, #82AEB1 0%, #A7ACD9 100%);
+      color: #ffffff;
+      border-color: transparent;
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 6px 16px rgba(130, 174, 177, 0.35);
+    }
+    .skill-chip.active-chip {
+      background-color: #668586 !important;
+      color: #ffffff !important;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(102, 133, 134, 0.3);
+    }
+
+    /* Modal Bullet Styling */
     .modal-bullet-list {
       margin: 0;
       padding-left: 1.25rem;
@@ -46,268 +129,335 @@
     }
     .highlight-text {
       display: inline;
-      background-color: rgba(16, 185, 129, 0.15);
-      color: #059669;
+      background-color: rgba(147, 198, 214, 0.25);
+      color: #315052;
       padding: 0.125rem 0.375rem;
-      border-radius: 0.25rem;
-      font-weight: 500;
-      margin: 0;
+      border-radius: 0.375rem;
+      font-weight: 600;
     }
     .dark .highlight-text {
-      color: #10b981;
-    }
-
-    /* Refined Skill Tag UI & Active States */
-    .skill-chip {
-      cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      user-select: none;
-    }
-    .skill-chip:hover {
-      border-color: rgba(16, 185, 129, 0.5);
-      color: #ffffff;
-      transform: translateY(-1px);
-    }
-    .skill-chip.active-chip {
-      background-color: rgba(16, 185, 129, 0.15) !important;
-      color: #34d399 !important;
-      border-color: #10b981 !important;
-      font-weight: 600;
-      box-shadow: 0 0 12px rgba(16, 185, 129, 0.2);
-    }
-
-    #skill-detail-box {
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background-color: rgba(147, 198, 214, 0.2);
+      color: #93C6D6;
     }
   </style>
 </head>
-<body class="bg-slate-100/70 dark:bg-slate-900/90 text-slate-800 dark:text-slate-100 transition-colors duration-300 antialiased selection:bg-brand-500 selection:text-white relative">
+<body class="bg-[#F4F6F8] dark:bg-slate-950 text-slate-800 dark:text-slate-100 antialiased selection:bg-palette-skyBlue selection:text-slate-900 relative min-h-screen transition-colors duration-300">
 
-  <nav class="fixed top-0 w-full bg-slate-100/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 z-40">
-    <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-      <a href="#" class="font-bold text-xl tracking-tight hover:text-brand-600 dark:hover:text-brand-500 transition-colors">Archita Jain<span class="text-brand-600 dark:text-brand-500">.</span></a>
-      <div class="flex items-center gap-6">
-        <a href="#about" class="text-sm font-medium hover:text-brand-600 dark:hover:text-brand-500 transition-colors hidden sm:block">About</a>
-        <a href="#bridging-the-gap" class="text-sm font-medium hover:text-brand-600 dark:hover:text-brand-500 transition-colors hidden sm:block">Focus</a>
-        <a href="#experience" class="text-sm font-medium hover:text-brand-600 dark:hover:text-brand-500 transition-colors hidden sm:block">Experience</a>
-        <a href="#projects" class="text-sm font-medium hover:text-brand-600 dark:hover:text-brand-500 transition-colors hidden sm:block">Projects</a>
-        <a href="#skills" class="text-sm font-medium hover:text-brand-600 dark:hover:text-brand-500 transition-colors hidden sm:block">Skills</a>
-        <a href="https://www.linkedin.com/in/jain-archita/" target="_blank" class="text-slate-500 hover:text-brand-600 dark:hover:text-brand-500 transition-colors"><i class="fa-brands fa-linkedin text-lg"></i></a>
-        <a href="https://github.com/architajain28" target="_blank" class="text-slate-500 hover:text-brand-600 dark:hover:text-brand-500 transition-colors"><i class="fa-brands fa-github text-lg"></i></a>
-        <button id="theme-toggle" class="p-2 rounded-lg bg-slate-200/60 dark:bg-slate-800/60 text-slate-600 dark:text-slate-300 hover:text-brand-600 transition-colors" aria-label="Toggle Theme">
-          <i class="fa-solid fa-moon dark:hidden"></i>
-          <i class="fa-solid fa-sun hidden dark:block"></i>
+  <!-- Navigation Bar -->
+  <nav class="fixed top-0 w-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 z-40 transition-colors duration-300">
+    <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="#" class="font-black text-2xl tracking-tight text-palette-deepTeal dark:text-palette-tropicalTeal hover:opacity-80 transition-opacity flex items-center gap-2">
+        Archita<span class="text-palette-lilacAsh">.</span>
+      </a>
+      <div class="flex items-center gap-6 text-sm font-semibold text-slate-600 dark:text-slate-300">
+        <a href="#about" class="hover:text-palette-deepTeal dark:hover:text-palette-tropicalTeal transition-colors hidden sm:block">About</a>
+        <a href="#bridging-the-gap" class="hover:text-palette-deepTeal dark:hover:text-palette-tropicalTeal transition-colors hidden sm:block">Focus</a>
+        <a href="#experience" class="hover:text-palette-deepTeal dark:hover:text-palette-tropicalTeal transition-colors hidden sm:block">Experience</a>
+        <a href="#projects" class="hover:text-palette-deepTeal dark:hover:text-palette-tropicalTeal transition-colors hidden sm:block">Projects</a>
+        <a href="#skills" class="hover:text-palette-deepTeal dark:hover:text-palette-tropicalTeal transition-colors hidden sm:block">Skills</a>
+        <div class="h-4 w-px bg-slate-300 dark:bg-slate-700 hidden sm:block"></div>
+        <a href="https://www.linkedin.com/in/jain-archita/" target="_blank" class="text-slate-500 dark:text-slate-400 hover:text-palette-deepTeal dark:hover:text-palette-tropicalTeal transition-colors"><i class="fa-brands fa-linkedin text-xl"></i></a>
+        <a href="https://github.com/architajain28" target="_blank" class="text-slate-500 dark:text-slate-400 hover:text-palette-deepTeal dark:hover:text-palette-tropicalTeal transition-colors"><i class="fa-brands fa-github text-xl"></i></a>
+        
+        <!-- Dark Mode Toggle Button -->
+        <button id="theme-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-palette-deepTeal dark:hover:text-palette-tropicalTeal transition-all">
+          <i id="theme-toggle-dark-icon" class="fa-solid fa-moon text-lg hidden"></i>
+          <i id="theme-toggle-light-icon" class="fa-solid fa-sun text-lg hidden"></i>
         </button>
       </div>
     </div>
   </nav>
 
-  <section class="pt-32 pb-12 px-6 max-w-5xl mx-auto flex flex-col justify-center min-h-[48vh] reveal">
-    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-50/80 dark:bg-emerald-950/40 border border-brand-200/80 dark:border-emerald-800/60 text-brand-700 dark:text-brand-400 text-xs font-medium mb-6 w-fit shadow-sm">
-      <span class="w-2 h-2 rounded-full bg-brand-500 animate-ping"></span>
-      HCI & CS @ Carnegie Mellon University (Expected May 2027)
-    </div>
-    <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
-      HCI Research, Product Strategy & Technical Execution.
-    </h1>
-    <p class="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mb-8 leading-relaxed">
-      Product-focused researcher and developer bridging user needs, interaction design, and robust technical architectures.
-    </p>
-    <div class="flex flex-wrap gap-4">
-      <a href="#projects" class="px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-medium shadow-md transition-all hover:scale-[1.02]">Explore Case Studies</a>
-      <a href="mailto:architaj@andrew.cmu.edu" class="px-6 py-3 rounded-xl border border-slate-300/80 dark:border-slate-700/80 bg-white/50 dark:bg-slate-800/40 hover:border-brand-600 font-medium transition-all hover:scale-[1.02]">Get in Touch</a>
+  <!-- Editorial Hero Section -->
+  <section class="pt-32 pb-20 px-6 max-w-6xl mx-auto min-h-[85vh] flex items-center reveal">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full hero-container">
+      
+      <!-- Left Column: Editorial Text -->
+      <div class="lg:col-span-7 z-10">
+        <div class="inline-flex items-center gap-2 text-palette-lilacAsh font-bold tracking-wide uppercase text-xs mb-3">
+          <span class="w-2.5 h-2.5 rounded-full bg-palette-tropicalTeal inline-block"></span>
+          Human-Computer Interaction @ CMU
+        </div>
+
+        <h1 class="text-5xl sm:text-7xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.05] mb-6">
+          Hello! I'm <span class="text-palette-deepTeal dark:text-palette-tropicalTeal">Archita</span>. I build human-centered AI products.
+        </h1>
+
+        <!-- Editorial Accent Line Structure -->
+        <div class="border-y-2 border-slate-300 dark:border-slate-800 py-3 my-6 max-w-xl space-y-2 text-xs font-mono uppercase tracking-wider text-slate-600 dark:text-slate-400">
+          <div class="flex justify-between items-center">
+            <span>Primary Focus</span>
+            <span class="font-bold text-palette-deepTeal dark:text-palette-tropicalTeal">HCI Research &amp; Product Strategy</span>
+          </div>
+          <div class="border-t border-slate-200 dark:border-slate-800 pt-2 flex justify-between items-center">
+            <span>Technical Stack</span>
+            <span class="font-bold text-palette-deepTeal dark:text-palette-tropicalTeal">Full-Stack AI &amp; Interactive UI</span>
+          </div>
+        </div>
+
+        <p class="text-base text-slate-600 dark:text-slate-300 max-w-lg mb-8 leading-relaxed font-medium">
+          Translating complex machine learning and privacy requirements into intuitive, reliable interfaces for researchers, clinicians, and everyday users.
+        </p>
+
+        <div class="flex flex-wrap gap-4 text-sm font-bold">
+          <a href="#projects" class="px-8 py-4 rounded-2xl bg-palette-deepTeal hover:bg-[#526d6e] text-white shadow-xl shadow-palette-deepTeal/20 transition-all hover:scale-105">Explore Work</a>
+          <a href="mailto:architaj@andrew.cmu.edu" class="px-8 py-4 rounded-2xl border-2 border-palette-deepTeal dark:border-palette-tropicalTeal text-palette-deepTeal dark:text-palette-tropicalTeal hover:bg-palette-deepTeal dark:hover:bg-palette-tropicalTeal hover:text-white dark:hover:text-slate-950 transition-all hover:scale-105">Contact Me</a>
+        </div>
+      </div>
+
+      <!-- Right Column: Abstract Geometric Visual Cards -->
+      <div class="lg:col-span-5 relative flex justify-center items-center h-[380px] sm:h-[420px]">
+        
+        <!-- Deep Teal Back Card -->
+        <div class="hero-card-1 absolute w-64 h-80 sm:w-72 sm:h-96 rounded-3xl bg-palette-deepTeal p-6 text-white shadow-2xl flex flex-col justify-between border-2 border-white dark:border-slate-800">
+          <div class="flex justify-between items-start">
+            <span class="text-xs font-mono uppercase tracking-widest opacity-80">Research</span>
+            <i class="fa-solid fa-sparkles text-xl"></i>
+          </div>
+          <div>
+            <p class="text-2xl font-extrabold mb-1">Privy &amp; SafeRx</p>
+            <p class="text-xs opacity-90 font-medium">AI Privacy Tools &amp; Clinical Decision Systems</p>
+          </div>
+        </div>
+
+        <!-- Tropical Teal Front Card -->
+        <div class="hero-card-2 absolute w-64 h-80 sm:w-72 sm:h-96 rounded-3xl bg-palette-tropicalTeal p-6 text-slate-900 shadow-2xl flex flex-col justify-between border-2 border-white dark:border-slate-800">
+          <div class="flex justify-between items-start">
+            <span class="text-xs font-mono uppercase font-bold tracking-widest text-slate-800">Engineering</span>
+            <i class="fa-solid fa-code text-xl text-slate-800"></i>
+          </div>
+          <div>
+            <p class="text-2xl font-black mb-1 text-slate-900">CMU '27</p>
+            <p class="text-xs font-semibold text-slate-800">School of Computer Science | HCI</p>
+          </div>
+        </div>
+
+      </div>
+
     </div>
   </section>
 
-  <section id="about" class="py-16 px-6 max-w-5xl mx-auto border-t border-slate-200/80 dark:border-slate-800/80">
+  <!-- About Section -->
+  <section id="about" class="py-16 px-6 max-w-5xl mx-auto border-t border-slate-200 dark:border-slate-800">
     <div class="grid grid-cols-1 md:grid-cols-12 gap-10 items-center reveal">
       <div class="md:col-span-4 flex justify-center">
-        <div class="relative w-48 h-48 sm:w-56 sm:h-56 rounded-full overflow-hidden border-4 border-brand-500/30 shadow-lg bg-slate-200 dark:bg-slate-800 flex items-center justify-center">
-          <img 
-            src="Me.png" 
-            alt="Archita Jain" 
-            class="w-full h-full object-cover"
-          />
+        <div class="relative p-2 rounded-3xl bg-gradient-to-tr from-palette-skyBlue via-palette-periwinkle to-palette-lilacAsh shadow-xl transition-all duration-500 hover:scale-105">
+          <div class="w-48 h-48 sm:w-56 sm:h-56 rounded-2xl overflow-hidden border-4 border-white dark:border-slate-900 bg-slate-100 dark:bg-slate-800 flex items-center justify-center group">
+            <img 
+              src="me.png" 
+              alt="Archita Jain" 
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              onerror="this.src='Me.jpg'"
+            />
+          </div>
         </div>
       </div>
       <div class="md:col-span-8">
-        <h2 class="text-3xl font-bold mb-4">About Me</h2>
-        <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-          I'm an undergraduate student studying <strong>Human-Computer Interaction</strong> and <strong>Computer Science</strong> at <strong>Carnegie Mellon University</strong>.
+        <span class="text-xs font-bold tracking-widest text-palette-deepTeal dark:text-palette-tropicalTeal uppercase mb-2 block">About Me</span>
+        <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mb-4">Crafting Thoughtful Digital Experiences 🌸</h2>
+        <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4 font-medium">
+          I'm an undergraduate student studying <strong>Human-Computer Interaction</strong> in the <strong>School of Computer Science</strong> at <strong>Carnegie Mellon University</strong>.
         </p>
-        <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
+        <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-6 font-medium">
           My focus sits at the intersection of HCI research, product management, and full-stack software development. I translate qualitative user research and interaction principles into functional, scalable software products.
         </p>
-        <div class="flex flex-wrap gap-2">
-          <span class="text-xs px-3 py-1 rounded-full bg-slate-200/70 dark:bg-slate-800/70 text-slate-700 dark:text-slate-300 border border-slate-300/50 dark:border-slate-700/50">Product Strategy</span>
-          <span class="text-xs px-3 py-1 rounded-full bg-slate-200/70 dark:bg-slate-800/70 text-slate-700 dark:text-slate-300 border border-slate-300/50 dark:border-slate-700/50">HCI Research</span>
-          <span class="text-xs px-3 py-1 rounded-full bg-slate-200/70 dark:bg-slate-800/70 text-slate-700 dark:text-slate-300 border border-slate-300/50 dark:border-slate-700/50">UX / UI Architecture</span>
-          <span class="text-xs px-3 py-1 rounded-full bg-slate-200/70 dark:bg-slate-800/70 text-slate-700 dark:text-slate-300 border border-slate-300/50 dark:border-slate-700/50">User Testing</span>
+        <div class="flex flex-wrap gap-2 text-xs font-bold">
+          <span class="px-4 py-2 rounded-xl bg-palette-skyBlue/20 dark:bg-palette-skyBlue/10 text-palette-deepTeal dark:text-palette-skyBlue border border-palette-skyBlue/40">Product Strategy</span>
+          <span class="px-4 py-2 rounded-xl bg-palette-periwinkle/20 dark:bg-palette-periwinkle/10 text-palette-deepTeal dark:text-palette-periwinkle border border-palette-periwinkle/40">HCI Research</span>
+          <span class="px-4 py-2 rounded-xl bg-palette-lilacAsh/20 dark:bg-palette-lilacAsh/10 text-palette-deepTeal dark:text-palette-lilacAsh border border-palette-lilacAsh/40">UX / UI Architecture</span>
+          <span class="px-4 py-2 rounded-xl bg-palette-tropicalTeal/20 dark:bg-palette-tropicalTeal/10 text-palette-deepTeal dark:text-palette-tropicalTeal border border-palette-tropicalTeal/40">User Testing</span>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="bridging-the-gap" class="py-16 px-6 max-w-5xl mx-auto border-t border-slate-200/80 dark:border-slate-800/80">
+  <!-- Core Pillars -->
+  <section id="bridging-the-gap" class="py-16 px-6 max-w-5xl mx-auto border-t border-slate-200 dark:border-slate-800">
     <div class="reveal text-center max-w-2xl mx-auto mb-12">
-      <h2 class="text-3xl font-bold mb-3">Core Pillars</h2>
-      <p class="text-slate-600 dark:text-slate-400 text-sm">Synthesizing design research, product strategy, and engineering.</p>
+      <span class="text-xs font-bold tracking-widest text-palette-deepTeal dark:text-palette-tropicalTeal uppercase mb-2 block">Framework</span>
+      <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mb-3">Core Pillars 🎨</h2>
+      <p class="text-slate-600 dark:text-slate-300 text-sm font-medium">Synthesizing design research, product strategy, and engineering.</p>
     </div>
 
-    <div class="reveal relative flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0 my-8 min-h-[340px]">
+    <div class="reveal relative flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0 my-8 min-h-[320px]">
       
-      <div class="w-64 h-64 sm:w-72 sm:h-72 rounded-full bg-slate-200/60 dark:bg-slate-800/60 border-2 border-slate-300/80 dark:border-slate-700/80 p-6 flex flex-col justify-center items-center text-center shadow-md md:-mr-12 z-10 hover:z-30 hover:scale-105 hover:border-brand-500 hover:shadow-xl transition-all duration-300 cursor-pointer group">
-        <i class="fa-solid fa-code text-2xl text-slate-500 group-hover:text-brand-500 mb-2 transition-colors"></i>
-        <h3 class="font-bold text-base mb-1 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">Technical Rigor</h3>
-        <p class="text-xs text-slate-500 dark:text-slate-400">Full Stack Systems, React, Python, APIs, Machine Learning Integration</p>
+      <!-- Card 1 -->
+      <div class="w-64 h-64 sm:w-72 sm:h-72 rounded-3xl bg-white dark:bg-slate-900 border-2 border-palette-tropicalTeal p-6 flex flex-col justify-center items-center text-center shadow-lg md:-mr-10 z-10 hover:z-30 hover:scale-105 hover:bg-white dark:hover:bg-slate-900 hover:border-palette-deepTeal dark:hover:border-palette-tropicalTeal transition-all duration-300 cursor-pointer group">
+        <div class="w-12 h-12 rounded-2xl bg-palette-tropicalTeal/20 text-palette-deepTeal dark:text-palette-tropicalTeal group-hover:bg-palette-deepTeal dark:group-hover:bg-palette-tropicalTeal group-hover:text-white dark:group-hover:text-slate-950 flex items-center justify-center mb-4 text-xl transition-all duration-300">
+          <i class="fa-solid fa-code"></i>
+        </div>
+        <h3 class="font-bold text-lg text-slate-900 dark:text-white group-hover:text-palette-deepTeal dark:group-hover:text-palette-tropicalTeal transition-colors mb-2">Technical Rigor</h3>
+        <p class="text-xs text-slate-600 dark:text-slate-300 font-medium leading-relaxed transition-colors">Full Stack Systems, React, Python, APIs, Machine Learning Integration</p>
       </div>
 
-      <div class="w-56 h-56 sm:w-64 sm:h-64 rounded-full bg-brand-500/15 border-2 border-brand-500/70 p-6 flex flex-col justify-center items-center text-center shadow-lg z-20 hover:z-30 hover:scale-105 hover:bg-brand-500/25 transition-all duration-300 cursor-pointer backdrop-blur-md group">
-        <i class="fa-solid fa-lightbulb text-3xl text-brand-500 group-hover:scale-110 mb-2 transition-transform"></i>
-        <h3 class="font-bold text-sm text-brand-700 dark:text-brand-400 mb-1">Product & Research</h3>
-        <p class="text-[11px] text-slate-700 dark:text-slate-300 font-medium leading-tight">AI PM & HCI Methodology</p>
+      <!-- Card 2 (Center Highlight) -->
+      <div class="w-56 h-56 sm:w-64 sm:h-64 rounded-3xl bg-palette-deepTeal text-white p-6 flex flex-col justify-center items-center text-center shadow-xl z-20 hover:z-30 hover:scale-105 hover:bg-[#526d6e] transition-all duration-300 cursor-pointer group">
+        <div class="w-12 h-12 rounded-2xl bg-white/20 text-white flex items-center justify-center mb-3 text-xl group-hover:rotate-12 transition-transform">
+          <i class="fa-solid fa-lightbulb"></i>
+        </div>
+        <h3 class="font-bold text-base mb-1 text-white">Product &amp; Research</h3>
+        <p class="text-xs text-slate-100 font-medium leading-tight opacity-95">AI PM &amp; HCI Methodology</p>
       </div>
 
-      <div class="w-64 h-64 sm:w-72 sm:h-72 rounded-full bg-slate-200/60 dark:bg-slate-800/60 border-2 border-slate-300/80 dark:border-slate-700/80 p-6 flex flex-col justify-center items-center text-center shadow-md md:-ml-12 z-10 hover:z-30 hover:scale-105 hover:border-brand-500 hover:shadow-xl transition-all duration-300 cursor-pointer group">
-        <i class="fa-solid fa-compass-drafting text-2xl text-slate-500 group-hover:text-brand-500 mb-2 transition-colors"></i>
-        <h3 class="font-bold text-base mb-1 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">HCI & UX/UI</h3>
-        <p class="text-xs text-slate-500 dark:text-slate-400">Usability Testing, Needfinding, Design Systems, Figma Mockups</p>
+      <!-- Card 3 -->
+      <div class="w-64 h-64 sm:w-72 sm:h-72 rounded-3xl bg-white dark:bg-slate-900 border-2 border-palette-periwinkle p-6 flex flex-col justify-center items-center text-center shadow-lg md:-ml-10 z-10 hover:z-30 hover:scale-105 hover:bg-white dark:hover:bg-slate-900 hover:border-palette-deepTeal dark:hover:border-palette-tropicalTeal transition-all duration-300 cursor-pointer group">
+        <div class="w-12 h-12 rounded-2xl bg-palette-periwinkle/20 text-palette-deepTeal dark:text-palette-periwinkle group-hover:bg-palette-deepTeal dark:group-hover:bg-palette-periwinkle group-hover:text-white dark:group-hover:text-slate-950 flex items-center justify-center mb-4 text-xl transition-all duration-300">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+        </div>
+        <h3 class="font-bold text-lg text-slate-900 dark:text-white group-hover:text-palette-deepTeal dark:group-hover:text-palette-tropicalTeal transition-colors mb-2">HCI &amp; UX/UI</h3>
+        <p class="text-xs text-slate-600 dark:text-slate-300 font-medium leading-relaxed transition-colors">Usability Testing, Needfinding, Design Systems, Figma Mockups</p>
       </div>
 
     </div>
   </section>
 
-  <section id="experience" class="py-16 px-6 max-w-5xl mx-auto border-t border-slate-200/80 dark:border-slate-800/80">
+  <!-- Experience Section -->
+  <section id="experience" class="py-16 px-6 max-w-5xl mx-auto border-t border-slate-200 dark:border-slate-800">
     <div class="reveal mb-12">
-      <h2 class="text-3xl font-bold mb-2">Experience</h2>
-      <p class="text-slate-600 dark:text-slate-400 text-sm">Click any card to open full case study details and research methodology.</p>
+      <span class="text-xs font-bold tracking-widest text-palette-deepTeal dark:text-palette-tropicalTeal uppercase mb-2 block">Career</span>
+      <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mb-2">Experience 💼</h2>
+      <p class="text-slate-600 dark:text-slate-300 text-sm font-medium">Click any card to open full case study details and research methodology.</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       
-      <div onclick="openModal('exp-spud')" class="reveal cursor-pointer p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-800/30 hover:border-brand-500 hover:shadow-lg transition-all duration-300 group">
+      <!-- Card 1 -->
+      <div onclick="openModal('exp-spud')" class="reveal color-hover-card cursor-pointer rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-7 group">
         <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-mono text-slate-500">May 2026 – Present</span>
-          <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-brand-500 transition-colors"></i>
+          <span class="text-xs font-bold text-palette-deepTeal dark:text-palette-tropicalTeal px-3 py-1 rounded-full bg-palette-tropicalTeal/20 group-hover:bg-palette-tropicalTeal group-hover:text-white dark:group-hover:text-slate-950 transition-colors">May 2026 – Present</span>
+          <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-palette-deepTeal dark:group-hover:text-palette-tropicalTeal transition-colors"></i>
         </div>
-        <h3 class="text-lg font-bold group-hover:text-brand-600 dark:group-hover:text-brand-500 transition-colors">SPUD Lab CMU — Privy</h3>
-        <p class="text-xs text-brand-600 dark:text-brand-500 font-medium mb-3">Full Stack Developer & HCI Researcher</p>
+        <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-palette-deepTeal dark:group-hover:text-palette-tropicalTeal transition-colors mb-1">SPUD Lab CMU — Privy</h3>
+        <p class="text-xs font-semibold text-palette-lilacAsh mb-3">Full Stack Developer &amp; HCI Researcher</p>
 
-        <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+        <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-5 font-medium">
           Architecting and evaluating Privy, an AI-driven privacy risk analysis engine for product managers and engineering leads.
         </p>
 
-        <div class="flex flex-wrap gap-1.5">
-          <span class="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300">HCI Research</span>
-          <span class="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300">UX Strategy</span>
-          <span class="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300">LLM Integration</span>
+        <div class="flex flex-wrap gap-1.5 text-[11px] font-bold">
+          <span class="px-2.5 py-1 rounded-lg bg-palette-skyBlue/20 dark:bg-palette-skyBlue/10 text-palette-deepTeal dark:text-palette-skyBlue">HCI Research</span>
+          <span class="px-2.5 py-1 rounded-lg bg-palette-periwinkle/20 dark:bg-palette-periwinkle/10 text-palette-deepTeal dark:text-palette-periwinkle">UX Strategy</span>
+          <span class="px-2.5 py-1 rounded-lg bg-palette-lilacAsh/20 dark:bg-palette-lilacAsh/10 text-palette-deepTeal dark:text-palette-lilacAsh">LLM Integration</span>
         </div>
       </div>
 
-      <div onclick="openModal('exp-plus')" class="reveal cursor-pointer p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-800/30 hover:border-brand-500 hover:shadow-lg transition-all duration-300 group">
+      <!-- Card 2 -->
+      <div onclick="openModal('exp-plus')" class="reveal color-hover-card cursor-pointer rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-7 group">
         <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-mono text-slate-500">May 2026 – Present</span>
-          <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-brand-500 transition-colors"></i>
+          <span class="text-xs font-bold text-palette-deepTeal dark:text-palette-tropicalTeal px-3 py-1 rounded-full bg-palette-tropicalTeal/20 group-hover:bg-palette-tropicalTeal group-hover:text-white dark:group-hover:text-slate-950 transition-colors">May 2026 – Present</span>
+          <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-palette-deepTeal dark:group-hover:text-palette-tropicalTeal transition-colors"></i>
         </div>
-        <h3 class="text-lg font-bold group-hover:text-brand-600 dark:group-hover:text-brand-500 transition-colors">PLUS Project</h3>
-        <p class="text-xs text-brand-600 dark:text-brand-500 font-medium mb-3">Full Stack Developer & UX Researcher</p>
+        <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-palette-deepTeal dark:group-hover:text-palette-tropicalTeal transition-colors mb-1">PLUS Project</h3>
+        <p class="text-xs font-semibold text-palette-lilacAsh mb-3">Full Stack Developer &amp; UX Researcher</p>
 
-        <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+        <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-5 font-medium">
           Designing analytics dashboards and data workflows for educators across multiple school districts.
         </p>
 
-        <div class="flex flex-wrap gap-1.5">
-          <span class="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300">Co-Design</span>
-          <span class="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300">EduTech UX</span>
-          <span class="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300">React Dashboard</span>
+        <div class="flex flex-wrap gap-1.5 text-[11px] font-bold">
+          <span class="px-2.5 py-1 rounded-lg bg-palette-skyBlue/20 dark:bg-palette-skyBlue/10 text-palette-deepTeal dark:text-palette-skyBlue">Co-Design</span>
+          <span class="px-2.5 py-1 rounded-lg bg-palette-periwinkle/20 dark:bg-palette-periwinkle/10 text-palette-deepTeal dark:text-palette-periwinkle">EduTech UX</span>
+          <span class="px-2.5 py-1 rounded-lg bg-palette-lilacAsh/20 dark:bg-palette-lilacAsh/10 text-palette-deepTeal dark:text-palette-lilacAsh">React Dashboard</span>
         </div>
       </div>
 
-      <div onclick="openModal('exp-clarity')" class="reveal cursor-pointer p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-800/30 hover:border-brand-500 hover:shadow-lg transition-all duration-300 group">
+      <!-- Card 3 -->
+      <div onclick="openModal('exp-clarity')" class="reveal color-hover-card cursor-pointer rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-7 group">
         <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-mono text-slate-500">July 2025 – October 2025</span>
-          <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-brand-500 transition-colors"></i>
+          <span class="text-xs font-bold text-palette-deepTeal dark:text-palette-tropicalTeal px-3 py-1 rounded-full bg-palette-skyBlue/30 group-hover:bg-palette-skyBlue group-hover:text-white dark:group-hover:text-slate-950 transition-colors">July 2025 – Oct 2025</span>
+          <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-palette-deepTeal dark:group-hover:text-palette-tropicalTeal transition-colors"></i>
         </div>
-        <h3 class="text-lg font-bold group-hover:text-brand-600 dark:group-hover:text-brand-500 transition-colors">Clarity Coach</h3>
-        <p class="text-xs text-brand-600 dark:text-brand-500 font-medium mb-3">AI & Technical Product Manager Intern</p>
+        <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-palette-deepTeal dark:group-hover:text-palette-tropicalTeal transition-colors mb-1">Clarity Coach</h3>
+        <p class="text-xs font-semibold text-palette-lilacAsh mb-3">AI &amp; Technical Product Manager Intern</p>
 
-        <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+        <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-5 font-medium">
           Spearheaded automated video coaching backend features, reduced latency, and co-invented a provisional patent.
         </p>
 
-        <div class="flex flex-wrap gap-1.5">
-          <span class="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300">Product Management</span>
-          <span class="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300">Patent Co-Inventor</span>
-          <span class="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300">Figma Mocks</span>
+        <div class="flex flex-wrap gap-1.5 text-[11px] font-bold">
+          <span class="px-2.5 py-1 rounded-lg bg-palette-skyBlue/20 dark:bg-palette-skyBlue/10 text-palette-deepTeal dark:text-palette-skyBlue">Product Mgmt</span>
+          <span class="px-2.5 py-1 rounded-lg bg-palette-periwinkle/20 dark:bg-palette-periwinkle/10 text-palette-deepTeal dark:text-palette-periwinkle">Patent Co-Inventor</span>
+          <span class="px-2.5 py-1 rounded-lg bg-palette-lilacAsh/20 dark:bg-palette-lilacAsh/10 text-palette-deepTeal dark:text-palette-lilacAsh">Figma Mocks</span>
         </div>
       </div>
 
-      <div onclick="openModal('exp-hopeful')" class="reveal cursor-pointer p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-800/30 hover:border-brand-500 hover:shadow-lg transition-all duration-300 group">
+      <!-- Card 4 -->
+      <div onclick="openModal('exp-hopeful')" class="reveal color-hover-card cursor-pointer rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-7 group">
         <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-mono text-slate-500">Fall 2024 – Present</span>
-          <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-brand-500 transition-colors"></i>
+          <span class="text-xs font-bold text-palette-deepTeal dark:text-palette-tropicalTeal px-3 py-1 rounded-full bg-palette-skyBlue/30 group-hover:bg-palette-skyBlue group-hover:text-white dark:group-hover:text-slate-950 transition-colors">Fall 2024 – Present</span>
+          <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-palette-deepTeal dark:group-hover:text-palette-tropicalTeal transition-colors"></i>
         </div>
-        <h3 class="text-lg font-bold group-hover:text-brand-600 dark:group-hover:text-brand-500 transition-colors">HOPEful Engineering Collective</h3>
-        <p class="text-xs text-brand-600 dark:text-brand-500 font-medium mb-3">Full Stack Web Lead</p>
+        <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-palette-deepTeal dark:group-hover:text-palette-tropicalTeal transition-colors mb-1">HOPEful Engineering Collective</h3>
+        <p class="text-xs font-semibold text-palette-lilacAsh mb-3">Full Stack Web Lead</p>
 
-        <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+        <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-5 font-medium">
           Maintained web architecture and spearheaded event infrastructure for tech ethics research initiatives.
         </p>
 
-        <div class="flex flex-wrap gap-1.5">
-          <span class="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300">Tech Ethics</span>
-          <span class="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300">Community Engagement</span>
-          <span class="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300">Django / React</span>
+        <div class="flex flex-wrap gap-1.5 text-[11px] font-bold">
+          <span class="px-2.5 py-1 rounded-lg bg-palette-skyBlue/20 dark:bg-palette-skyBlue/10 text-palette-deepTeal dark:text-palette-skyBlue">Tech Ethics</span>
+          <span class="px-2.5 py-1 rounded-lg bg-palette-periwinkle/20 dark:bg-palette-periwinkle/10 text-palette-deepTeal dark:text-palette-periwinkle">Community Engagement</span>
+          <span class="px-2.5 py-1 rounded-lg bg-palette-lilacAsh/20 dark:bg-palette-lilacAsh/10 text-palette-deepTeal dark:text-palette-lilacAsh">Django / React</span>
         </div>
       </div>
 
     </div>
   </section>
 
-  <section id="projects" class="py-16 px-6 max-w-5xl mx-auto border-t border-slate-200/80 dark:border-slate-800/80">
-    <div class="reveal mb-12">
-      <h2 class="text-3xl font-bold mb-2">Selected Case Studies & Projects</h2>
-      <p class="text-slate-600 dark:text-slate-400 text-sm">Click to open full problem statement, user research, and technical solutions.</p>
+  <!-- Featured Projects -->
+  <section id="projects" class="py-16 px-6 max-w-5xl mx-auto border-t border-slate-200 dark:border-slate-800">
+    <div class="reveal mb-8">
+      <span class="text-xs font-bold tracking-widest text-palette-deepTeal dark:text-palette-tropicalTeal uppercase mb-2 block">Portfolio</span>
+      <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mb-2">Featured Projects 🚀</h2>
+      <p class="text-slate-600 dark:text-slate-300 text-sm font-medium">Click to open full problem statement, user research, and technical solutions.</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="project-cards-container">
       
-      <div onclick="openModal('proj-unitube')" class="reveal cursor-pointer group rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-800/40 overflow-hidden hover:border-brand-500 transition-all duration-300 hover:shadow-lg">
-        <div class="bg-gradient-to-r from-emerald-950/20 to-slate-800/30 p-8 flex items-center justify-center relative min-h-[150px]">
-          <i class="fa-solid fa-language text-5xl text-brand-500 group-hover:scale-105 transition-transform duration-300"></i>
-          <span class="absolute top-4 right-4 text-[11px] font-semibold px-3 py-1 rounded-full bg-emerald-950/60 border border-brand-500/30 text-brand-400">Top 5 @ TartanHacks</span>
+      <!-- ÜniTube Card -->
+      <div onclick="openModal('proj-unitube')" class="project-card color-hover-card reveal cursor-pointer group rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden">
+        <div class="relative h-48 bg-slate-100 dark:bg-slate-800 overflow-hidden flex items-center justify-center">
+          <img src="unitube.jpg" alt="ÜniTube Preview" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');" />
+          <div class="hidden flex flex-col items-center justify-center text-center p-4">
+            <i class="fa-solid fa-language text-5xl text-palette-deepTeal dark:text-palette-tropicalTeal mb-2"></i>
+          </div>
+          <span class="absolute top-4 right-4 text-xs font-bold px-3 py-1.5 rounded-xl bg-white/95 dark:bg-slate-900/95 text-palette-deepTeal dark:text-palette-tropicalTeal shadow-md border border-slate-200 dark:border-slate-700 group-hover:bg-palette-deepTeal group-hover:text-white dark:group-hover:bg-palette-tropicalTeal dark:group-hover:text-slate-950 transition-colors">🏆 Top 5 @ TartanHacks</span>
         </div>
-        <div class="p-6">
-          <h3 class="text-xl font-bold mb-1 group-hover:text-brand-500 transition-colors">ÜniTube</h3>
-          <p class="text-xs text-slate-500 font-medium mb-3">Generative Video Translation & Accessibility</p>
-          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+        <div class="p-7">
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-palette-deepTeal dark:group-hover:text-palette-tropicalTeal transition-colors mb-1">ÜniTube</h3>
+          <p class="text-xs font-semibold text-palette-lilacAsh mb-3">Generative Video Translation &amp; Accessibility</p>
+          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-5 font-medium">
             Generative AI translation pipeline combining transcription, lip-sync, and voice-cloning models to preserve speaker intent.
           </p>
 
-          <div class="flex flex-wrap gap-1.5">
-            <span class="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300">Accessibility</span>
-            <span class="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300">Generative AI</span>
-            <span class="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300">UX Architecture</span>
+          <div class="flex flex-wrap gap-1.5 text-[11px] font-bold">
+            <span class="px-2.5 py-1 rounded-lg bg-palette-skyBlue/20 dark:bg-palette-skyBlue/10 text-palette-deepTeal dark:text-palette-skyBlue">Accessibility</span>
+            <span class="px-2.5 py-1 rounded-lg bg-palette-periwinkle/20 dark:bg-palette-periwinkle/10 text-palette-deepTeal dark:text-palette-periwinkle">Generative AI</span>
+            <span class="px-2.5 py-1 rounded-lg bg-palette-lilacAsh/20 dark:bg-palette-lilacAsh/10 text-palette-deepTeal dark:text-palette-lilacAsh">UX Architecture</span>
           </div>
         </div>
       </div>
 
-      <div onclick="openModal('proj-saferx')" class="reveal cursor-pointer group rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-800/40 overflow-hidden hover:border-brand-500 transition-all duration-300 hover:shadow-lg">
-        <div class="bg-gradient-to-r from-emerald-950/20 to-slate-800/30 p-8 flex items-center justify-center relative min-h-[150px]">
-          <i class="fa-solid fa-shield-heart text-5xl text-brand-500 group-hover:scale-105 transition-transform duration-300"></i>
-          <span class="absolute top-4 right-4 text-[11px] font-semibold px-3 py-1 rounded-full bg-emerald-950/60 border border-brand-500/30 text-brand-400">1st Place Patient Safety</span>
+      <!-- SafeRx Card -->
+      <div onclick="openModal('proj-saferx')" class="project-card color-hover-card reveal cursor-pointer group rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden">
+        <div class="relative h-48 bg-slate-100 dark:bg-slate-800 overflow-hidden flex items-center justify-center">
+          <img src="saferx.jpg" alt="SafeRx Preview" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');" />
+          <div class="hidden flex flex-col items-center justify-center text-center p-4">
+            <i class="fa-solid fa-shield-heart text-5xl text-palette-deepTeal dark:text-palette-tropicalTeal mb-2"></i>
+          </div>
+          <span class="absolute top-4 right-4 text-xs font-bold px-3 py-1.5 rounded-xl bg-white/95 dark:bg-slate-900/95 text-palette-deepTeal dark:text-palette-tropicalTeal shadow-md border border-slate-200 dark:border-slate-700 group-hover:bg-palette-deepTeal group-hover:text-white dark:group-hover:bg-palette-tropicalTeal dark:group-hover:text-slate-950 transition-colors">🥇 1st Place Patient Safety</span>
         </div>
-        <div class="p-6">
-          <h3 class="text-xl font-bold mb-1 group-hover:text-brand-500 transition-colors">SafeRx</h3>
-          <p class="text-xs text-slate-500 font-medium mb-3">AI Prescription Auditor & Clinical UX</p>
-          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+        <div class="p-7">
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-palette-deepTeal dark:group-hover:text-palette-tropicalTeal transition-colors mb-1">SafeRx</h3>
+          <p class="text-xs font-semibold text-palette-lilacAsh mb-3">AI Prescription Auditor &amp; Clinical UX</p>
+          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-5 font-medium">
             Clinical decision support tool using RL fine-tuned LLMs to prevent prescription errors and combat alert fatigue.
           </p>
 
-          <div class="flex flex-wrap gap-1.5">
-            <span class="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300">Clinical UX</span>
-            <span class="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300">Decision Support</span>
-            <span class="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300">RL Fine-Tuning</span>
+          <div class="flex flex-wrap gap-1.5 text-[11px] font-bold">
+            <span class="px-2.5 py-1 rounded-lg bg-palette-skyBlue/20 dark:bg-palette-skyBlue/10 text-palette-deepTeal dark:text-palette-skyBlue">Clinical UX</span>
+            <span class="px-2.5 py-1 rounded-lg bg-palette-periwinkle/20 dark:bg-palette-periwinkle/10 text-palette-deepTeal dark:text-palette-periwinkle">Decision Support</span>
+            <span class="px-2.5 py-1 rounded-lg bg-palette-lilacAsh/20 dark:bg-palette-lilacAsh/10 text-palette-deepTeal dark:text-palette-lilacAsh">RL Fine-Tuning</span>
           </div>
         </div>
       </div>
@@ -315,116 +465,122 @@
     </div>
   </section>
 
-  <section id="skills" class="py-16 px-6 max-w-5xl mx-auto border-t border-slate-200/80 dark:border-slate-800/80">
+  <!-- Skills Section -->
+  <section id="skills" class="py-16 px-6 max-w-5xl mx-auto border-t border-slate-200 dark:border-slate-800">
     <div class="reveal mb-12">
-      <h2 class="text-3xl font-bold mb-2">Skills & Toolkit</h2>
-      <p class="text-slate-600 dark:text-slate-400 text-sm">Balanced across design research, product management, and engineering. Click any tag to inspect or toggle selection.</p>
+      <span class="text-xs font-bold tracking-widest text-palette-deepTeal dark:text-palette-tropicalTeal uppercase mb-2 block">Skills &amp; Tools</span>
+      <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mb-2">Toolkit 💡</h2>
+      <p class="text-slate-600 dark:text-slate-300 text-sm font-medium">Balanced across design research, product management, and engineering. Click any tag to inspect details.</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal mb-8">
       
-      <div class="p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/50 bg-white/80 dark:bg-slate-800/40 backdrop-blur-sm shadow-xl flex flex-col justify-between">
+      <div class="p-7 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col justify-between hover:border-palette-skyBlue transition-colors duration-300">
         <div>
-          <div class="flex items-center gap-3 mb-4">
-            <div class="p-2 rounded-lg bg-emerald-500/10 text-brand-600 dark:text-emerald-400">
-              <i class="fa-solid fa-compass-drafting text-base"></i>
+          <div class="flex items-center gap-3 mb-5">
+            <div class="p-3 rounded-2xl bg-palette-skyBlue/25 text-palette-deepTeal dark:text-palette-skyBlue text-lg">
+              <i class="fa-solid fa-compass-drafting"></i>
             </div>
-            <h3 class="font-bold text-base">HCI & UX/UI Design</h3>
+            <h3 class="font-bold text-slate-900 dark:text-white text-lg">HCI &amp; UX/UI</h3>
           </div>
-          <div class="flex flex-wrap gap-2">
-            <button onclick="toggleSkill('Figma Mocks', this)" class="skill-chip text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">Figma Mocks</button>
-            <button onclick="toggleSkill('Usability Testing', this)" class="skill-chip text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">Usability Testing</button>
-            <button onclick="toggleSkill('Qualitative Interviews', this)" class="skill-chip text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">Qualitative Interviews</button>
-            <button onclick="toggleSkill('Co-Design Workshops', this)" class="skill-chip text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">Co-Design Workshops</button>
-            <button onclick="toggleSkill('Interaction Design', this)" class="skill-chip text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">Interaction Design</button>
-            <button onclick="toggleSkill('Heuristic Evaluation', this)" class="skill-chip text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">Heuristic Evaluation</button>
-            <button onclick="toggleSkill('Design Systems', this)" class="skill-chip text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">Design Systems</button>
-            <button onclick="toggleSkill('Affinity Diagramming', this)" class="skill-chip text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">Affinity Diagramming</button>
+          <div class="flex flex-wrap gap-2 text-xs font-medium">
+            <button onclick="toggleSkill('Figma Mocks', this)" class="skill-chip px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">Figma Mocks</button>
+            <button onclick="toggleSkill('Usability Testing', this)" class="skill-chip px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">Usability Testing</button>
+            <button onclick="toggleSkill('Qualitative Interviews', this)" class="skill-chip px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">Qualitative Interviews</button>
+            <button onclick="toggleSkill('Co-Design Workshops', this)" class="skill-chip px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">Co-Design Workshops</button>
+            <button onclick="toggleSkill('Interaction Design', this)" class="skill-chip px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">Interaction Design</button>
+            <button onclick="toggleSkill('Heuristic Evaluation', this)" class="skill-chip px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">Heuristic Evaluation</button>
+            <button onclick="toggleSkill('Design Systems', this)" class="skill-chip px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">Design Systems</button>
+            <button onclick="toggleSkill('Affinity Diagramming', this)" class="skill-chip px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">Affinity Diagramming</button>
           </div>
         </div>
       </div>
 
-      <div class="p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/50 bg-white/80 dark:bg-slate-800/40 backdrop-blur-sm shadow-xl flex flex-col justify-between">
+      <div class="p-7 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col justify-between hover:border-palette-periwinkle transition-colors duration-300">
         <div>
-          <div class="flex items-center gap-3 mb-4">
-            <div class="p-2 rounded-lg bg-emerald-500/10 text-brand-600 dark:text-emerald-400">
-              <i class="fa-solid fa-list-check text-base"></i>
+          <div class="flex items-center gap-3 mb-5">
+            <div class="p-3 rounded-2xl bg-palette-periwinkle/25 text-palette-deepTeal dark:text-palette-periwinkle text-lg">
+              <i class="fa-solid fa-list-check"></i>
             </div>
-            <h3 class="font-bold text-base">Product Management</h3>
+            <h3 class="font-bold text-slate-900 dark:text-white text-lg">Product Mgmt</h3>
           </div>
-          <div class="flex flex-wrap gap-2">
-            <button onclick="toggleSkill('Agile / Scrum', this)" class="skill-chip text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">Agile / Scrum</button>
-            <button onclick="toggleSkill('Product Roadmaps', this)" class="skill-chip text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">Product Roadmaps</button>
-            <button onclick="toggleSkill('User Story Mapping', this)" class="skill-chip text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">User Story Mapping</button>
-            <button onclick="toggleSkill('AI Feature Specs', this)" class="skill-chip text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">AI Feature Specs</button>
-            <button onclick="toggleSkill('Jira', this)" class="skill-chip text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">Jira</button>
-            <button onclick="toggleSkill('Competitive Benchmarking', this)" class="skill-chip text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">Competitive Benchmarking</button>
-            <button onclick="toggleSkill('A/B Testing Strategy', this)" class="skill-chip text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">A/B Testing Strategy</button>
-            <button onclick="toggleSkill('KPI & Metric Definition', this)" class="skill-chip text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">KPI & Metric Definition</button>
+          <div class="flex flex-wrap gap-2 text-xs font-medium">
+            <button onclick="toggleSkill('Agile / Scrum', this)" class="skill-chip px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">Agile / Scrum</button>
+            <button onclick="toggleSkill('Product Roadmaps', this)" class="skill-chip px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">Product Roadmaps</button>
+            <button onclick="toggleSkill('User Story Mapping', this)" class="skill-chip px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">User Story Mapping</button>
+            <button onclick="toggleSkill('AI Feature Specs', this)" class="skill-chip px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">AI Feature Specs</button>
+            <button onclick="toggleSkill('Jira', this)" class="skill-chip px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">Jira</button>
+            <button onclick="toggleSkill('Competitive Benchmarking', this)" class="skill-chip px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">Competitive Benchmarking</button>
+            <button onclick="toggleSkill('A/B Testing Strategy', this)" class="skill-chip px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">A/B Testing Strategy</button>
+            <button onclick="toggleSkill('KPI & Metric Definition', this)" class="skill-chip px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">KPI & Metric Definition</button>
           </div>
         </div>
       </div>
 
-      <div class="p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/50 bg-white/80 dark:bg-slate-800/40 backdrop-blur-sm shadow-xl flex flex-col justify-between">
+      <div class="p-7 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col justify-between hover:border-palette-lilacAsh transition-colors duration-300">
         <div>
-          <div class="flex items-center gap-3 mb-4">
-            <div class="p-2 rounded-lg bg-emerald-500/10 text-brand-600 dark:text-emerald-400">
-              <i class="fa-solid fa-code text-base"></i>
+          <div class="flex items-center gap-3 mb-5">
+            <div class="p-3 rounded-2xl bg-palette-lilacAsh/25 text-palette-deepTeal dark:text-palette-lilacAsh text-lg">
+              <i class="fa-solid fa-code"></i>
             </div>
-            <h3 class="font-bold text-base">Software Engineering</h3>
+            <h3 class="font-bold text-slate-900 dark:text-white text-lg">Software Eng</h3>
           </div>
-          <div class="flex flex-wrap gap-2">
-            <button onclick="toggleSkill('React.js', this)" class="skill-chip text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">React.js</button>
-            <button onclick="toggleSkill('Node.js', this)" class="skill-chip text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">Node.js</button>
-            <button onclick="toggleSkill('Python', this)" class="skill-chip text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">Python</button>
-            <button onclick="toggleSkill('SQL', this)" class="skill-chip text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">SQL</button>
-            <button onclick="toggleSkill('JavaScript (ES6+)', this)" class="skill-chip text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">JavaScript (ES6+)</button>
-            <button onclick="toggleSkill('Git & Version Control', this)" class="skill-chip text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">Git & Version Control</button>
-            <button onclick="toggleSkill('REST APIs', this)" class="skill-chip text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">REST APIs</button>
-            <button onclick="toggleSkill('LLM Prompt Pipelines', this)" class="skill-chip text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">LLM Prompt Pipelines</button>
+          <div class="flex flex-wrap gap-2 text-xs font-medium">
+            <button onclick="toggleSkill('React.js', this)" class="skill-chip px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">React.js</button>
+            <button onclick="toggleSkill('Node.js', this)" class="skill-chip px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">Node.js</button>
+            <button onclick="toggleSkill('Python', this)" class="skill-chip px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">Python</button>
+            <button onclick="toggleSkill('SQL', this)" class="skill-chip px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">SQL</button>
+            <button onclick="toggleSkill('JavaScript (ES6+)', this)" class="skill-chip px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">JavaScript (ES6+)</button>
+            <button onclick="toggleSkill('Git & Version Control', this)" class="skill-chip px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">Git & Version Control</button>
+            <button onclick="toggleSkill('REST APIs', this)" class="skill-chip px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">REST APIs</button>
+            <button onclick="toggleSkill('LLM Prompt Pipelines', this)" class="skill-chip px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">LLM Prompt Pipelines</button>
           </div>
         </div>
       </div>
 
     </div>
 
-    <div class="reveal relative p-5 rounded-xl border border-emerald-500/30 bg-emerald-950/20 dark:bg-slate-800/50 shadow-2xl transition-all duration-300" id="skill-detail-box">
+    <!-- Inspector Box Container -->
+    <div class="reveal relative p-6 rounded-2xl border-l-4 border-palette-deepTeal dark:border-palette-tropicalTeal bg-white dark:bg-slate-900 shadow-md border-t border-r border-b border-slate-200 dark:border-slate-800 transition-all duration-300" id="skill-detail-box">
       <div class="flex items-start justify-between gap-4">
         <div class="flex items-start gap-3">
-          <i class="fa-solid fa-sparkles text-emerald-400 text-sm mt-1 shrink-0" id="detail-icon"></i>
+          <i class="fa-solid fa-circle-info text-palette-deepTeal dark:text-palette-tropicalTeal text-base mt-0.5 shrink-0" id="detail-icon"></i>
           <div>
-            <h4 class="font-bold text-sm text-emerald-400 mb-1" id="skill-detail-title">Interactive Toolkit Inspector</h4>
-            <p class="text-xs text-slate-300 leading-relaxed" id="skill-detail-desc">
+            <h4 class="font-bold text-sm text-slate-900 dark:text-white mb-1" id="skill-detail-title">Interactive Toolkit Inspector</h4>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium" id="skill-detail-desc">
               Click on any skill tag above to inspect details on how I apply it across HCI research, product planning, and technical execution.
             </p>
           </div>
         </div>
-        <button onclick="resetSkillInspector()" class="text-slate-400 hover:text-white p-1 rounded-md hover:bg-slate-800 transition-colors shrink-0" aria-label="Dismiss inspector">
+        <button id="close-inspector" onclick="hideInspector()" class="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 p-1 rounded-md transition-colors shrink-0" aria-label="Dismiss inspector">
           <i class="fa-solid fa-xmark text-sm"></i>
         </button>
       </div>
     </div>
   </section>
 
-  <footer class="py-12 border-t border-slate-200/80 dark:border-slate-800/80 text-center text-sm text-slate-500">
+  <!-- Footer -->
+  <footer class="py-12 border-t border-slate-200 dark:border-slate-800 text-center text-xs font-semibold text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900 transition-colors duration-300">
     <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p>© 2026 Archita Jain. Designed & Engineered with Care.</p>
+      <p>© 2026 Archita Jain. Crafted with care &amp; code.</p>
       <div class="flex gap-6">
-        <a href="https://www.linkedin.com/in/jain-archita/" target="_blank" class="hover:text-brand-600 dark:hover:text-brand-500 transition-colors"><i class="fa-brands fa-linkedin text-lg"></i></a>
-        <a href="https://github.com/architajain28" target="_blank" class="hover:text-brand-600 dark:hover:text-brand-500 transition-colors"><i class="fa-brands fa-github text-lg"></i></a>
-        <a href="mailto:architaj@andrew.cmu.edu" class="hover:text-brand-600 dark:hover:text-brand-500 transition-colors"><i class="fa-solid fa-envelope text-lg"></i></a>
+        <a href="https://www.linkedin.com/in/jain-archita/" target="_blank" class="hover:text-palette-deepTeal dark:hover:text-palette-tropicalTeal transition-colors"><i class="fa-brands fa-linkedin text-lg"></i></a>
+        <a href="https://github.com/architajain28" target="_blank" class="hover:text-palette-deepTeal dark:hover:text-palette-tropicalTeal transition-colors"><i class="fa-brands fa-github text-lg"></i></a>
+        <a href="mailto:architaj@andrew.cmu.edu" class="hover:text-palette-deepTeal dark:hover:text-palette-tropicalTeal transition-colors"><i class="fa-solid fa-envelope text-lg"></i></a>
       </div>
     </div>
   </footer>
 
-  <button id="scroll-to-top" onclick="scrollToTop()" class="fixed bottom-6 right-6 p-3 rounded-xl bg-brand-600 text-white shadow-lg hover:bg-brand-700 transition-all duration-300 opacity-0 pointer-events-none z-30 hover:scale-105" aria-label="Scroll to top">
+  <!-- Scroll to Top Button -->
+  <button id="scroll-to-top" onclick="scrollToTop()" class="fixed bottom-6 right-6 p-3.5 rounded-2xl bg-palette-deepTeal dark:bg-palette-tropicalTeal text-white dark:text-slate-950 shadow-lg hover:bg-[#526d6e] dark:hover:bg-[#91c0c3] transition-all duration-300 opacity-0 pointer-events-none z-30 hover:scale-110 hover:shadow-palette-deepTeal/30" aria-label="Scroll to top">
     <i class="fa-solid fa-arrow-up text-base"></i>
   </button>
 
-  <div id="modal-overlay" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-8 relative shadow-xl transition-transform duration-300 scale-95" id="modal-card">
+  <!-- Modal Component -->
+  <div id="modal-overlay" class="fixed inset-0 bg-slate-900/60 dark:bg-slate-950/80 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-8 relative shadow-2xl transition-transform duration-300 scale-95" id="modal-card">
       
-      <button onclick="closeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-brand-500 text-xl font-bold transition-colors">
+      <button onclick="closeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 text-xl font-bold transition-colors">
         <i class="fa-solid fa-xmark"></i>
       </button>
 
@@ -434,11 +590,32 @@
   </div>
 
   <script>
-    // Theme Toggle
-    const themeToggle = document.getElementById('theme-toggle');
-    themeToggle.addEventListener('click', () => {
-      document.documentElement.classList.toggle('dark');
-    });
+    // Dark Mode Toggle Logic
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+    function updateThemeIcons() {
+      if (document.documentElement.classList.contains('dark')) {
+        themeToggleDarkIcon.classList.add('hidden');
+        themeToggleLightIcon.classList.remove('hidden');
+      } else {
+        themeToggleLightIcon.classList.add('hidden');
+        themeToggleDarkIcon.classList.remove('hidden');
+      }
+    }
+
+    function toggleDarkMode() {
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.theme = 'light';
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.theme = 'dark';
+      }
+      updateThemeIcons();
+    }
+
+    updateThemeIcons();
 
     // Scroll Reveal & Scroll-to-Top Button Visibility
     const scrollToTopBtn = document.getElementById('scroll-to-top');
@@ -492,27 +669,31 @@
       'A/B Testing Strategy': 'Formulating hypothesis-driven feature variants to evaluate user engagement, retention, and workflow completion metrics.',
       'KPI & Metric Definition': 'Establishing quantitative success metrics (e.g., task completion time, latency tolerance) to evaluate feature effectiveness.',
 
-      'React.js': 'Building modern, component-driven, responsive user interfaces with state management, custom hooks, and dynamic data rendering.',
-      'Node.js': 'Developing server-side application logic, middleware APIs, asynchronous data workflows, and backend service connections.',
-      'Python': 'Writing data processing scripts, machine learning pipeline orchestrations, fine-tuning scripts, and automated testing setups.',
-      'SQL': 'Designing relational database schemas, executing complex join queries, and optimizing data retrieval performance for analytics engines.',
-      'JavaScript (ES6+)': 'Leveraging modern JavaScript features, asynchronous functions, DOM manipulation, and promises for responsive web applications.',
-      'Git & Version Control': 'Managing version control workflows, branching strategies, collaborative code reviews, and clean merging across repos.',
-      'REST APIs': 'Designing, implementing, and consuming structured HTTP REST endpoints connecting frontend applications to backend services.',
-      'LLM Prompt Pipelines': 'Orchestrating structured LLM prompt templates, parsing API JSON responses, and managing context limits for generative AI features.'
+      'React.js': 'Building modular, component-based user interfaces with state management, custom hooks, and dynamic data binding.',
+      'Node.js': 'Developing server-side runtime applications, REST API routing, and backend integrations for real-time web tools.',
+      'Python': 'Architecting data processing pipelines, backend services, script automation, and machine learning models.',
+      'SQL': 'Writing database queries, schema designs, and data manipulation scripts for relational database management systems.',
+      'JavaScript (ES6+)': 'Utilizing modern async/await patterns, functional array methods, modular imports, and dynamic DOM manipulation.',
+      'Git & Version Control': 'Managing branch strategies, resolving merge conflicts, and maintaining clean commit histories in team repositories.',
+      'REST APIs': 'Designing, documenting, and consuming scalable HTTP endpoints for asynchronous web communication.',
+      'LLM Prompt Pipelines': 'Constructing structured prompt chains, API integrations (OpenAI/Anthropic), and fallback handlers for generative AI features.'
     };
 
     let activeSkillName = null;
 
     function toggleSkill(skillName, chipElement) {
+      const inspectorBox = document.getElementById('skill-detail-box');
       const titleEl = document.getElementById('skill-detail-title');
       const descEl = document.getElementById('skill-detail-desc');
       const allChips = document.querySelectorAll('.skill-chip');
 
-      // Unselect if clicking the active skill tag again
       if (activeSkillName === skillName) {
         resetSkillInspector();
         return;
+      }
+
+      if (inspectorBox) {
+        inspectorBox.style.display = 'block';
       }
 
       activeSkillName = skillName;
@@ -523,6 +704,15 @@
         titleEl.textContent = skillName;
         descEl.textContent = skillExplanations[skillName];
       }
+    }
+
+    function hideInspector() {
+      const inspectorBox = document.getElementById('skill-detail-box');
+      if (inspectorBox) {
+        inspectorBox.style.display = 'none';
+      }
+      activeSkillName = null;
+      document.querySelectorAll('.skill-chip').forEach(chip => chip.classList.remove('active-chip'));
     }
 
     function resetSkillInspector() {
@@ -539,22 +729,22 @@
         subtitle: 'Full Stack Developer & HCI Researcher | May 2026 – Present',
         content: `
           <div class="space-y-4 text-sm text-slate-600 dark:text-slate-300">
-            <div class="p-3 bg-brand-500/10 rounded-lg border border-brand-500/20 text-brand-700 dark:text-brand-400 font-medium text-xs">
-              <strong>Advisor:</strong> Sauvik Das &nbsp;|&nbsp; <strong>Mentor:</strong> Hank Lee
+            <div class="p-3 bg-palette-skyBlue/20 dark:bg-palette-skyBlue/10 rounded-xl border border-palette-skyBlue/30 text-palette-deepTeal dark:text-palette-skyBlue text-xs font-bold">
+              Advisor: Sauvik Das &nbsp;|&nbsp; Mentor: Hank Lee
             </div>
 
             <div>
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-xs uppercase tracking-wider mb-1">User Problem</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">User Problem</p>
               <p>Software product teams frequently bypass privacy compliance because legal frameworks are dense, disconnected from technical specifications, and introduced too late in sprint cycles.</p>
             </div>
 
             <div>
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-xs uppercase tracking-wider mb-1">My Role & Ownership</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">My Role &amp; Ownership</p>
               <p>Owned frontend dashboard components, prompt orchestration pipelines using OpenAI APIs, and user testing with software engineers and product managers.</p>
             </div>
 
             <div>
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-xs uppercase tracking-wider mb-1">Solution & Execution</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">Solution &amp; Execution</p>
               <ul class="modal-bullet-list list-disc">
                 <li><span class="highlight-text">Engineered Prompt Pipelines:</span> Converted abstract privacy policies into structured risk indicators parsed directly from product spec drafts.</li>
                 <li><span class="highlight-text">Designed Visual Risk Indicators:</span> Built intuitive dashboards in React.js that prioritize actionable UI alerts over text-heavy logs to avoid alert fatigue.</li>
@@ -562,7 +752,7 @@
             </div>
 
             <div>
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-xs uppercase tracking-wider mb-1">Impact & Validation</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">Impact &amp; Validation</p>
               <p>Evaluated interface clarity through iterative developer testing, proving that real-time spec evaluation reduces friction in early-stage product design.</p>
             </div>
           </div>
@@ -573,22 +763,22 @@
         subtitle: 'Full Stack Developer & UX Researcher | May 2026 – Present',
         content: `
           <div class="space-y-4 text-sm text-slate-600 dark:text-slate-300">
-            <div class="p-3 bg-brand-500/10 rounded-lg border border-brand-500/20 text-brand-700 dark:text-brand-400 font-medium text-xs">
-              <strong>Mentor:</strong> Conrad Borchers
+            <div class="p-3 bg-palette-skyBlue/20 dark:bg-palette-skyBlue/10 rounded-xl border border-palette-skyBlue/30 text-palette-deepTeal dark:text-palette-skyBlue text-xs font-bold">
+              Mentor: Conrad Borchers
             </div>
 
             <div>
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-xs uppercase tracking-wider mb-1">User Problem</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">User Problem</p>
               <p>Teachers are flooded with high-volume, unformatted learning analytics data daily, making it difficult to extract actionable student goal progress during active instruction.</p>
             </div>
 
             <div>
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-xs uppercase tracking-wider mb-1">My Role & Ownership</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">My Role &amp; Ownership</p>
               <p>Led full-stack dashboard implementation (React, Node.js, SQL) and co-designed workflows directly with K-12 educators across multiple school districts.</p>
             </div>
 
             <div>
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-xs uppercase tracking-wider mb-1">Solution & Execution</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">Solution &amp; Execution</p>
               <ul class="modal-bullet-list list-disc">
                 <li><span class="highlight-text">Scalable Data Pipelines:</span> Engineered SQL query optimizations processing daily i-Ready student usage data across districts.</li>
                 <li><span class="highlight-text">Goal-Oriented Dashboard:</span> Designed modular UI components focused on immediate classroom interventions rather than vanity metrics.</li>
@@ -596,7 +786,7 @@
             </div>
 
             <div>
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-xs uppercase tracking-wider mb-1">Impact & Validation</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">Impact &amp; Validation</p>
               <p>Validated platform usability through co-design workshops, achieving positive teacher feedback for real-time tracking in active learning environments.</p>
             </div>
           </div>
@@ -608,17 +798,17 @@
         content: `
           <div class="space-y-4 text-sm text-slate-600 dark:text-slate-300">
             <div>
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-xs uppercase tracking-wider mb-1">User Problem</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">User Problem</p>
               <p>Users experienced engagement drop-off during automated video coaching due to high processing latency and unintuitive visual feedback structures.</p>
             </div>
 
             <div>
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-xs uppercase tracking-wider mb-1">My Role & Ownership</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">My Role &amp; Ownership</p>
               <p>Spearheaded AI product roadmap planning, latency optimization, UI wireframing in Figma, and patent documentation for automated editing features.</p>
             </div>
 
             <div>
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-xs uppercase tracking-wider mb-1">Solution & Execution</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">Solution &amp; Execution</p>
               <ul class="modal-bullet-list list-disc">
                 <li><span class="highlight-text">Latency Optimization:</span> Reduced backend feedback latency by 70% through preprocessed LLM data orchestration.</li>
                 <li><span class="highlight-text">Provisional Patent Co-Inventor:</span> Co-developed automated video editing and highlight extraction algorithms.</li>
@@ -626,7 +816,7 @@
             </div>
 
             <div>
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-xs uppercase tracking-wider mb-1">Impact & Validation</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">Impact &amp; Validation</p>
               <p>Filed a provisional patent and successfully shipped low-latency UI prototypes that improved retention during video playback sessions.</p>
             </div>
           </div>
@@ -637,22 +827,22 @@
         subtitle: 'Full Stack Web Lead | Fall 2024 – Present',
         content: `
           <div class="space-y-4 text-sm text-slate-600 dark:text-slate-300">
-            <div class="p-3 bg-brand-500/10 rounded-lg border border-brand-500/20 text-brand-700 dark:text-brand-400 font-medium text-xs">
-              <strong>Advisor:</strong> Mike Skirpan
+            <div class="p-3 bg-palette-skyBlue/20 dark:bg-palette-skyBlue/10 rounded-xl border border-palette-skyBlue/30 text-palette-deepTeal dark:text-palette-skyBlue text-xs font-bold">
+              Advisor: Mike Skirpan
             </div>
 
             <div>
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-xs uppercase tracking-wider mb-1">User Problem</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">User Problem</p>
               <p>Students and researchers lacked a centralized, accessible platform to explore computing ethics research and participate in interdisciplinary discussions.</p>
             </div>
 
             <div>
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-xs uppercase tracking-wider mb-1">My Role & Ownership</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">My Role &amp; Ownership</p>
               <p>Maintained full-stack web infrastructure and organized community events surrounding technology ethics across Carnegie Mellon.</p>
             </div>
 
             <div>
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-xs uppercase tracking-wider mb-1">Solution & Execution</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">Solution &amp; Execution</p>
               <ul class="modal-bullet-list list-disc">
                 <li><span class="highlight-text">Web Infrastructure:</span> Developed and maintained responsive Django and React features for platform scheduling and research archiving.</li>
                 <li><span class="highlight-text">Event Coordination:</span> Structured digital and in-person engagement touchpoints for computing ethics workshops.</li>
@@ -660,7 +850,7 @@
             </div>
 
             <div>
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-xs uppercase tracking-wider mb-1">Impact & Validation</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">Impact &amp; Validation</p>
               <p>Facilitated technology ethics dialogues for over 100 campus participants while maintaining high platform reliability.</p>
             </div>
           </div>
@@ -672,17 +862,17 @@
         content: `
           <div class="space-y-4 text-sm text-slate-600 dark:text-slate-300">
             <div>
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-xs uppercase tracking-wider mb-1">User Problem</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">User Problem</p>
               <p>Standard video translation relies on subtitles that distract viewers, while traditional audio dubbing loses speaker tone, emotion, and natural lip alignment.</p>
             </div>
 
             <div>
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-xs uppercase tracking-wider mb-1">My Role & Ownership</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">My Role &amp; Ownership</p>
               <p>Architected generative backend pipelines and API orchestration in a 4-person hackathon team during a 24-hour sprint.</p>
             </div>
 
             <div>
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-xs uppercase tracking-wider mb-1">Solution & Execution</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">Solution &amp; Execution</p>
               <ul class="modal-bullet-list list-disc">
                 <li><span class="highlight-text">End-to-End Pipeline:</span> Integrated transcription, translation, voice cloning, and Wav2Lip generative models into a single automated workflow.</li>
                 <li><span class="highlight-text">API Orchestration:</span> Built lightweight middleware to sync audio timing with lip-synchronization generative frames.</li>
@@ -690,8 +880,8 @@
             </div>
 
             <div>
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-xs uppercase tracking-wider mb-1">Impact & Validation</p>
-              <p>Awarded **Top 5 overall out of 80+ projects** at TartanHacks for exceptional technical implementation and accessibility impact.</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">Impact &amp; Validation</p>
+              <p>Awarded <strong>Top 5 overall out of 80+ projects</strong> at TartanHacks for exceptional technical implementation and accessibility impact.</p>
             </div>
           </div>
         `
@@ -702,17 +892,17 @@
         content: `
           <div class="space-y-4 text-sm text-slate-600 dark:text-slate-300">
             <div>
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-xs uppercase tracking-wider mb-1">User Problem</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">User Problem</p>
               <p>Clinicians face severe alert fatigue from existing EMR systems, leading to overlooked drug-drug interactions and preventable dosage errors.</p>
             </div>
 
             <div>
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-xs uppercase tracking-wider mb-1">My Role & Ownership</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">My Role &amp; Ownership</p>
               <p>Co-developed GPT-4 fine-tuning scripts and designed the clinical verification UI to prioritize high-risk warnings cleanly.</p>
             </div>
 
             <div>
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-xs uppercase tracking-wider mb-1">Solution & Execution</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">Solution &amp; Execution</p>
               <ul class="modal-bullet-list list-disc">
                 <li><span class="highlight-text">RL Fine-Tuning:</span> Fine-tuned GPT-4 models using reinforcement learning against medical interaction databases.</li>
                 <li><span class="highlight-text">Clinical Verification UI:</span> Designed a streamlined interface that categorizes risk severity to eliminate unnecessary visual noise.</li>
@@ -720,8 +910,8 @@
             </div>
 
             <div>
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-xs uppercase tracking-wider mb-1">Impact & Validation</p>
-              <p>Won **1st Place** in the Patient Safety Challenge at Hack-a-StartUp and advanced as **National Semi-Finalists** in the Patient Safety Challenge Grand Awards.</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">Impact &amp; Validation</p>
+              <p>Won <strong>1st Place</strong> in the Patient Safety Challenge at Hack-a-StartUp and advanced as <strong>National Semi-Finalists</strong> in the Patient Safety Challenge Grand Awards.</p>
             </div>
           </div>
         `
@@ -739,7 +929,7 @@
 
       modalBody.innerHTML = `
         <h3 class="text-2xl font-bold mb-1 text-slate-900 dark:text-white">${data.title}</h3>
-        <p class="text-xs font-semibold text-brand-600 dark:text-brand-500 mb-6">${data.subtitle}</p>
+        <p class="text-xs font-bold text-palette-deepTeal dark:text-palette-tropicalTeal mb-6">${data.subtitle}</p>
         ${data.content}
       `;
 
@@ -747,6 +937,7 @@
       overlay.classList.add('opacity-100');
       modalCard.classList.remove('scale-95');
       modalCard.classList.add('scale-100');
+      document.body.style.overflow = 'hidden';
     }
 
     function closeModal() {
@@ -754,6 +945,7 @@
       overlay.classList.remove('opacity-100');
       modalCard.classList.add('scale-95');
       modalCard.classList.remove('scale-100');
+      document.body.style.overflow = 'auto';
     }
 
     overlay.addEventListener('click', (e) => {

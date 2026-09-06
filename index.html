@@ -117,15 +117,15 @@
       box-shadow: 0 4px 12px rgba(102, 133, 134, 0.3);
     }
 
-    /* Modal Bullet Styling */
+    /* Modal Styling */
     .modal-bullet-list {
       margin: 0;
       padding-left: 1.25rem;
     }
     .modal-bullet-list li {
       font-size: 0.875rem;
-      line-height: 1.6;
-      margin-bottom: 0.5rem;
+      line-height: 1.65;
+      margin-bottom: 0.75rem;
     }
     .highlight-text {
       display: inline;
@@ -133,7 +133,7 @@
       color: #315052;
       padding: 0.125rem 0.375rem;
       border-radius: 0.375rem;
-      font-weight: 600;
+      font-weight: 700;
     }
     .dark .highlight-text {
       background-color: rgba(147, 198, 214, 0.2);
@@ -264,7 +264,7 @@
         <div class="flex flex-wrap gap-2 text-xs font-bold">
           <span class="px-4 py-2 rounded-xl bg-palette-skyBlue/20 dark:bg-palette-skyBlue/10 text-palette-deepTeal dark:text-palette-skyBlue border border-palette-skyBlue/40">Product Strategy</span>
           <span class="px-4 py-2 rounded-xl bg-palette-periwinkle/20 dark:bg-palette-periwinkle/10 text-palette-deepTeal dark:text-palette-periwinkle border border-palette-periwinkle/40">HCI Research</span>
-          <span class="px-4 py-2 rounded-xl bg-palette-lilacAsh/20 dark:bg-palette-lilacAsh/10 text-palette-deepTeal dark:text-palette-lilacAsh border border-palette-lilacAsh/40">UX / UI Architecture</span>
+          <span class="px-4 py-2 rounded-xl bg-palette-lilacAsh/20 dark:bg-palette-lilacAsh/10 text-palette-deepTeal dark:text-palette-lilacAsh">UX / UI Architecture</span>
           <span class="px-4 py-2 rounded-xl bg-palette-tropicalTeal/20 dark:bg-palette-tropicalTeal/10 text-palette-deepTeal dark:text-palette-tropicalTeal border border-palette-tropicalTeal/40">User Testing</span>
         </div>
       </div>
@@ -316,7 +316,7 @@
     <div class="reveal mb-12">
       <span class="text-xs font-bold tracking-widest text-palette-deepTeal dark:text-palette-tropicalTeal uppercase mb-2 block">Career</span>
       <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mb-2">Experience 💼</h2>
-      <p class="text-slate-600 dark:text-slate-300 text-sm font-medium">Click any card to open full case study details and research methodology.</p>
+      <p class="text-slate-600 dark:text-slate-300 text-sm font-medium">Click any card to read what I built, my personal contributions, and what I learned.</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -331,7 +331,7 @@
         <p class="text-xs font-semibold text-palette-lilacAsh mb-3">Full Stack Developer &amp; HCI Researcher</p>
 
         <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-5 font-medium">
-          Architecting and evaluating Privy, an AI-driven privacy risk analysis engine for product managers and engineering leads.
+          Architecting Privy: an LLM-driven privacy risk detection engine for product managers and engineering leads.
         </p>
 
         <div class="flex flex-wrap gap-1.5 text-[11px] font-bold">
@@ -409,7 +409,7 @@
     <div class="reveal mb-8">
       <span class="text-xs font-bold tracking-widest text-palette-deepTeal dark:text-palette-tropicalTeal uppercase mb-2 block">Portfolio</span>
       <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mb-2">Featured Projects 🚀</h2>
-      <p class="text-slate-600 dark:text-slate-300 text-sm font-medium">Click to open full problem statement, user research, and technical solutions.</p>
+      <p class="text-slate-600 dark:text-slate-300 text-sm font-medium">Click to open my hands-on build notes, design choices, and personal takeaways.</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="project-cards-container">
@@ -578,7 +578,7 @@
 
   <!-- Modal Component -->
   <div id="modal-overlay" class="fixed inset-0 bg-slate-900/60 dark:bg-slate-950/80 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-8 relative shadow-2xl transition-transform duration-300 scale-95" id="modal-card">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-3xl w-full max-h-[88vh] overflow-y-auto p-6 sm:p-8 relative shadow-2xl transition-transform duration-300 scale-95" id="modal-card">
       
       <button onclick="closeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 text-xl font-bold transition-colors">
         <i class="fa-solid fa-xmark"></i>
@@ -722,72 +722,68 @@
       document.getElementById('skill-detail-desc').textContent = 'Click on any skill tag above to inspect details on how I apply it across HCI research, product planning, and technical execution.';
     }
 
-    // Modal Case Study Data
+    // Personal & Narrative Modal Case Study Data
     const modalData = {
       'exp-spud': {
         title: 'SPUD Lab CMU — Privy',
-        subtitle: 'Full Stack Developer & HCI Researcher | May 2026 – Present',
+        subtitle: 'Undergraduate Researcher & HCI Developer | May 2026 – Present',
         content: `
-          <div class="space-y-4 text-sm text-slate-600 dark:text-slate-300">
-            <div class="p-3 bg-palette-skyBlue/20 dark:bg-palette-skyBlue/10 rounded-xl border border-palette-skyBlue/30 text-palette-deepTeal dark:text-palette-skyBlue text-xs font-bold">
-              Advisor: Sauvik Das &nbsp;|&nbsp; Mentor: Hank Lee
+          <div class="space-y-6 text-sm text-slate-600 dark:text-slate-300">
+            <div class="flex flex-wrap gap-2 text-xs font-semibold">
+              <span class="px-2.5 py-1 bg-palette-skyBlue/20 dark:bg-palette-skyBlue/10 rounded-lg text-palette-deepTeal dark:text-palette-skyBlue">Advisor: Sauvik Das</span>
+              <span class="px-2.5 py-1 bg-palette-skyBlue/20 dark:bg-palette-skyBlue/10 rounded-lg text-palette-deepTeal dark:text-palette-skyBlue">Mentor: Hank Lee</span>
+              <span class="px-2.5 py-1 bg-palette-periwinkle/20 dark:bg-palette-periwinkle/10 rounded-lg text-palette-deepTeal dark:text-palette-periwinkle">Tech: Python, LLM Pipelines, Prompt Chaining, React.js, Figma</span>
             </div>
 
             <div>
-              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">User Problem</p>
-              <p>Software product teams frequently bypass privacy compliance because legal frameworks are dense, disconnected from technical specifications, and introduced too late in sprint cycles.</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-2">The Spark &amp; Problem</p>
+              <p class="leading-relaxed">In Carnegie Mellon's SPUD Lab, we set out to address a core gap in modern AI development: as large language models become embedded into consumer tools, developers lack real-time visibility into privacy risks, leading to unvetted data flow vulnerabilities and unintended exposure of user information.</p>
             </div>
 
             <div>
-              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">My Role &amp; Ownership</p>
-              <p>Owned frontend dashboard components, prompt orchestration pipelines using OpenAI APIs, and user testing with software engineers and product managers.</p>
-            </div>
-
-            <div>
-              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">Solution &amp; Execution</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-2">What I Personally Built &amp; Owned</p>
               <ul class="modal-bullet-list list-disc">
-                <li><span class="highlight-text">Engineered Prompt Pipelines:</span> Converted abstract privacy policies into structured risk indicators parsed directly from product spec drafts.</li>
-                <li><span class="highlight-text">Designed Visual Risk Indicators:</span> Built intuitive dashboards in React.js that prioritize actionable UI alerts over text-heavy logs to avoid alert fatigue.</li>
+                <li><span class="highlight-text">Privy LLM Risk Engine:</span> Researched and developed core components for Privy, an LLM-powered privacy risk detection tool designed to evaluate and surface privacy vulnerabilities in real time.</li>
+                <li><span class="highlight-text">Interactive Interfaces &amp; Systems:</span> Designed high-fidelity prototypes and developed frontend modules to transform complex privacy risk detection logic into clear, actionable feedback for developers.</li>
+                <li><span class="highlight-text">Evaluation &amp; Pipeline Iteration:</span> Conducted continuous evaluation on prompt structures and model outputs to maximize precision and deliver real-time risk alerts without workflow disruption.</li>
               </ul>
             </div>
 
             <div>
-              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">Impact &amp; Validation</p>
-              <p>Evaluated interface clarity through iterative developer testing, proving that real-time spec evaluation reduces friction in early-stage product design.</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-2">Key Takeaways &amp; What I Learned</p>
+              <p class="leading-relaxed mb-2"><strong class="text-slate-900 dark:text-white">Proactive Privacy Systems:</strong> Integrating privacy safeguards directly into developer tooling prevents critical architectural oversight before deployment rather than requiring reactive fixes.</p>
+              <p class="leading-relaxed"><strong class="text-slate-900 dark:text-white">Human-Centered AI Design:</strong> Translating automated privacy risk outputs into actionable, intuitive developer UI is essential to ensuring tool adoption and effective risk mitigation.</p>
             </div>
           </div>
         `
       },
       'exp-plus': {
-        title: 'PLUS Project',
+        title: 'PLUS Project — CMU HCII',
         subtitle: 'Full Stack Developer & UX Researcher | May 2026 – Present',
         content: `
-          <div class="space-y-4 text-sm text-slate-600 dark:text-slate-300">
-            <div class="p-3 bg-palette-skyBlue/20 dark:bg-palette-skyBlue/10 rounded-xl border border-palette-skyBlue/30 text-palette-deepTeal dark:text-palette-skyBlue text-xs font-bold">
-              Mentor: Conrad Borchers
+          <div class="space-y-6 text-sm text-slate-600 dark:text-slate-300">
+            <div class="flex flex-wrap gap-2 text-xs font-semibold">
+              <span class="px-2.5 py-1 bg-palette-skyBlue/20 dark:bg-palette-skyBlue/10 rounded-lg text-palette-deepTeal dark:text-palette-skyBlue">Mentor: Conrad Borchers</span>
+              <span class="px-2.5 py-1 bg-palette-periwinkle/20 dark:bg-palette-periwinkle/10 rounded-lg text-palette-deepTeal dark:text-palette-periwinkle">Tech: React, Node.js, SQL, Express, Figma</span>
             </div>
 
             <div>
-              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">User Problem</p>
-              <p>Teachers are flooded with high-volume, unformatted learning analytics data daily, making it difficult to extract actionable student goal progress during active instruction.</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-2">The Challenge</p>
+              <p class="leading-relaxed">Personalized Learning Squared (PLUS) leverages hybrid human-AI tutoring to accelerate learning outcomes for middle school math students. Teachers and tutors need instant, actionable learning analytics during active sessions without getting bogged down by complex data dashboards.</p>
             </div>
 
             <div>
-              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">My Role &amp; Ownership</p>
-              <p>Led full-stack dashboard implementation (React, Node.js, SQL) and co-designed workflows directly with K-12 educators across multiple school districts.</p>
-            </div>
-
-            <div>
-              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">Solution &amp; Execution</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-2">What I Personally Built &amp; Owned</p>
               <ul class="modal-bullet-list list-disc">
-                <li><span class="highlight-text">Scalable Data Pipelines:</span> Engineered SQL query optimizations processing daily i-Ready student usage data across districts.</li>
-                <li><span class="highlight-text">Goal-Oriented Dashboard:</span> Designed modular UI components focused on immediate classroom interventions rather than vanity metrics.</li>
+                <li><span class="highlight-text">Co-Design Workshops:</span> Facilitated qualitative user feedback sessions with educators and tutors to identify friction in real-time classroom orchestration tools.</li>
+                <li><span class="highlight-text">React Visualizations:</span> Built responsive dashboard components in React to display student interaction patterns and performance trends clearly by level of urgency.</li>
+                <li><span class="highlight-text">Data Pipeline Infrastructure:</span> Optimized SQL queries and backend services to aggregate student log data and tutoring metrics across learning environments seamlessly.</li>
               </ul>
             </div>
 
             <div>
-              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">Impact &amp; Validation</p>
-              <p>Validated platform usability through co-design workshops, achieving positive teacher feedback for real-time tracking in active learning environments.</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-2">Key Takeaways &amp; What I Learned</p>
+              <p class="leading-relaxed"><strong class="text-slate-900 dark:text-white">Empathy-Driven EdTech:</strong> Software engineered for fast-paced classroom environments must prioritize high-clarity UX and cognitive simplicity over raw data density so educators can take immediate action.</p>
             </div>
           </div>
         `
@@ -796,28 +792,29 @@
         title: 'Clarity Coach',
         subtitle: 'AI & Technical Product Manager Intern | July 2025 – October 2025',
         content: `
-          <div class="space-y-4 text-sm text-slate-600 dark:text-slate-300">
-            <div>
-              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">User Problem</p>
-              <p>Users experienced engagement drop-off during automated video coaching due to high processing latency and unintuitive visual feedback structures.</p>
+          <div class="space-y-6 text-sm text-slate-600 dark:text-slate-300">
+            <div class="flex flex-wrap gap-2 text-xs font-semibold">
+              <span class="px-2.5 py-1 bg-palette-skyBlue/20 dark:bg-palette-skyBlue/10 rounded-lg text-palette-deepTeal dark:text-palette-skyBlue">Provisional Patent Co-Inventor</span>
+              <span class="px-2.5 py-1 bg-palette-periwinkle/20 dark:bg-palette-periwinkle/10 rounded-lg text-palette-deepTeal dark:text-palette-periwinkle">Tech: Python, GPT Backends, Figma, AI Architectures</span>
             </div>
 
             <div>
-              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">My Role &amp; Ownership</p>
-              <p>Spearheaded AI product roadmap planning, latency optimization, UI wireframing in Figma, and patent documentation for automated editing features.</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-2">The Pivot Point</p>
+              <p class="leading-relaxed">The platform's AI feedback pipeline required optimization to handle automated video processing and generate real-time feedback without high backend latencies that degraded the overall user experience.</p>
             </div>
 
             <div>
-              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">Solution &amp; Execution</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-2">What I Personally Built &amp; Owned</p>
               <ul class="modal-bullet-list list-disc">
-                <li><span class="highlight-text">Latency Optimization:</span> Reduced backend feedback latency by 70% through preprocessed LLM data orchestration.</li>
-                <li><span class="highlight-text">Provisional Patent Co-Inventor:</span> Co-developed automated video editing and highlight extraction algorithms.</li>
+                <li><span class="highlight-text">GPT Backend Architecture:</span> Designed and optimized GPT-powered backend architectures in Python to streamline pipeline responses and improve video analysis speeds.</li>
+                <li><span class="highlight-text">Provisional Patent Co-Invention:</span> Co-invented and filed a provisional patent for automated video editing and highlight extraction mechanisms based on multimodal analysis.</li>
+                <li><span class="highlight-text">Product &amp; UI Design:</span> Designed user interfaces and wireframes in Figma, bridging technical specifications with intuitive user experience standards.</li>
               </ul>
             </div>
 
             <div>
-              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">Impact &amp; Validation</p>
-              <p>Filed a provisional patent and successfully shipped low-latency UI prototypes that improved retention during video playback sessions.</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-2">Key Takeaways &amp; What I Learned</p>
+              <p class="leading-relaxed"><strong class="text-slate-900 dark:text-white">Product Strategy &amp; Technical Ownership:</strong> Translating research-grade AI concepts into patented, market-ready product features requires clear cross-functional alignment between engineering and product vision.</p>
             </div>
           </div>
         `
@@ -826,92 +823,91 @@
         title: 'HOPEful Engineering Collective',
         subtitle: 'Full Stack Web Lead | Fall 2024 – Present',
         content: `
-          <div class="space-y-4 text-sm text-slate-600 dark:text-slate-300">
-            <div class="p-3 bg-palette-skyBlue/20 dark:bg-palette-skyBlue/10 rounded-xl border border-palette-skyBlue/30 text-palette-deepTeal dark:text-palette-skyBlue text-xs font-bold">
-              Advisor: Mike Skirpan
+          <div class="space-y-6 text-sm text-slate-600 dark:text-slate-300">
+            <div class="flex flex-wrap gap-2 text-xs font-semibold">
+              <span class="px-2.5 py-1 bg-palette-skyBlue/20 dark:bg-palette-skyBlue/10 rounded-lg text-palette-deepTeal dark:text-palette-skyBlue">Advisor: Mike Skirpan</span>
+              <span class="px-2.5 py-1 bg-palette-periwinkle/20 dark:bg-palette-periwinkle/10 rounded-lg text-palette-deepTeal dark:text-palette-periwinkle">Tech: Django, React, SQL, Git, Tailwind</span>
             </div>
 
             <div>
-              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">User Problem</p>
-              <p>Students and researchers lacked a centralized, accessible platform to explore computing ethics research and participate in interdisciplinary discussions.</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-2">The Mission</p>
+              <p class="leading-relaxed">As an initiative bridging engineering, ethics, and community outreach, the collective needed digital platform infrastructure that could handle research publication, event signups, and public engagement for over 100 participants.</p>
             </div>
 
             <div>
-              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">My Role &amp; Ownership</p>
-              <p>Maintained full-stack web infrastructure and organized community events surrounding technology ethics across Carnegie Mellon.</p>
-            </div>
-
-            <div>
-              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">Solution &amp; Execution</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-2">What I Personally Built &amp; Owned</p>
               <ul class="modal-bullet-list list-disc">
-                <li><span class="highlight-text">Web Infrastructure:</span> Developed and maintained responsive Django and React features for platform scheduling and research archiving.</li>
-                <li><span class="highlight-text">Event Coordination:</span> Structured digital and in-person engagement touchpoints for computing ethics workshops.</li>
+                <li><span class="highlight-text">Full Stack Architecture:</span> Built and maintained our relational SQL database schema and Django REST endpoints for secure user management and publication archiving.</li>
+                <li><span class="highlight-text">Frontend Experience:</span> Designed and developed our website using React and Tailwind CSS, focusing on responsive layout design and fast performance.</li>
+                <li><span class="highlight-text">DevOps &amp; Infrastructure:</span> Managed GitHub repository access, branch strategy, and server maintenance to keep the website reliable during peak campus events.</li>
               </ul>
             </div>
 
             <div>
-              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">Impact &amp; Validation</p>
-              <p>Facilitated technology ethics dialogues for over 100 campus participants while maintaining high platform reliability.</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-2">Key Takeaways &amp; What I Learned</p>
+              <p class="leading-relaxed"><strong class="text-slate-900 dark:text-white">Reliable software builds community trust.</strong> Running web platforms for real community events taught me the importance of stable deployments, defensive error handling, and accessible UI hierarchy.</p>
             </div>
           </div>
         `
       },
       'proj-unitube': {
-        title: 'ÜniTube — Video-to-Video Translation',
-        subtitle: 'Top 5 @ CMU TartanHacks (Spring 2024)',
+        title: 'ÜniTube — Generative Video Translation',
+        subtitle: 'Top 5 Overall @ CMU TartanHacks (Fall 2025)',
         content: `
-          <div class="space-y-4 text-sm text-slate-600 dark:text-slate-300">
-            <div>
-              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">User Problem</p>
-              <p>Standard video translation relies on subtitles that distract viewers, while traditional audio dubbing loses speaker tone, emotion, and natural lip alignment.</p>
+          <div class="space-y-6 text-sm text-slate-600 dark:text-slate-300">
+            <div class="flex flex-wrap gap-2 text-xs font-semibold">
+              <span class="px-2.5 py-1 bg-palette-skyBlue/20 dark:bg-palette-skyBlue/10 rounded-lg text-palette-deepTeal dark:text-palette-skyBlue">Award: Top 5 Project (80+ Teams)</span>
+              <span class="px-2.5 py-1 bg-palette-periwinkle/20 dark:bg-palette-periwinkle/10 rounded-lg text-palette-deepTeal dark:text-palette-periwinkle">Tech: Python, Whisper, Wav2Lip, ElevenLabs, React</span>
             </div>
 
             <div>
-              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">My Role &amp; Ownership</p>
-              <p>Architected generative backend pipelines and API orchestration in a 4-person hackathon team during a 24-hour sprint.</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-2">The Hackathon Spark</p>
+              <p class="leading-relaxed">Watching translated lectures often feels disjointed because dubs don't match lip movements, making it hard for non-native speakers to follow naturally. We wanted to see if generative AI could preserve speaker intent and expression across language barriers.</p>
             </div>
 
             <div>
-              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">Solution &amp; Execution</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-2">What I Personally Built &amp; Owned</p>
               <ul class="modal-bullet-list list-disc">
-                <li><span class="highlight-text">End-to-End Pipeline:</span> Integrated transcription, translation, voice cloning, and Wav2Lip generative models into a single automated workflow.</li>
-                <li><span class="highlight-text">API Orchestration:</span> Built lightweight middleware to sync audio timing with lip-synchronization generative frames.</li>
+                <li><span class="highlight-text">Pipeline Synchronization:</span> I chained together OpenAI Whisper for speech extraction, ElevenLabs for voice cloning, and Wav2Lip for deep learning lip sync into a unified Python backend.</li>
+                <li><span class="highlight-text">Audio Scaling Heuristics:</span> I wrote custom timestamp re-alignment logic to resolve audio drift and lip-sync mismatch across varying sentence lengths.</li>
+                <li><span class="highlight-text">Interactive Video UI:</span> I designed and coded the React frontend, allowing users to compare original and translated video tracks side-by-side with synchronized dynamic captions.</li>
               </ul>
             </div>
 
             <div>
-              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">Impact &amp; Validation</p>
-              <p>Awarded <strong>Top 5 overall out of 80+ projects</strong> at TartanHacks for exceptional technical implementation and accessibility impact.</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-2">Key Takeaways &amp; What I Learned</p>
+              <p class="leading-relaxed"><strong class="text-slate-900 dark:text-white">Combining specialized AI models creates powerful new capabilities.</strong> Stitching distinct generative AI tools together required tackling unexpected edge cases, teaching me how to debug complex, multi-model data pipelines under deadline pressure.</p>
             </div>
           </div>
         `
       },
       'proj-saferx': {
         title: 'SafeRx — AI Prescription Auditor',
-        subtitle: '1st Place Patient Safety Challenge @ Hack-a-StartUp (Fall 2023)',
+        subtitle: '1st Place Patient Safety Challenge @ CMU Hack-a-StartUp (Spring 2024)',
         content: `
-          <div class="space-y-4 text-sm text-slate-600 dark:text-slate-300">
-            <div>
-              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">User Problem</p>
-              <p>Clinicians face severe alert fatigue from existing EMR systems, leading to overlooked drug-drug interactions and preventable dosage errors.</p>
+          <div class="space-y-6 text-sm text-slate-600 dark:text-slate-300">
+            <div class="flex flex-wrap gap-2 text-xs font-semibold">
+              <span class="px-2.5 py-1 bg-palette-skyBlue/20 dark:bg-palette-skyBlue/10 rounded-lg text-palette-deepTeal dark:text-palette-skyBlue">Award: 1st Place Patient Safety Challenge</span>
+              <span class="px-2.5 py-1 bg-palette-periwinkle/20 dark:bg-palette-periwinkle/10 rounded-lg text-palette-deepTeal dark:text-palette-periwinkle">Tech: Python, PyTorch, GPT-4, Reinforcement Learning, React</span>
             </div>
 
             <div>
-              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">My Role &amp; Ownership</p>
-              <p>Co-developed GPT-4 fine-tuning scripts and designed the clinical verification UI to prioritize high-risk warnings cleanly.</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-2">The Problem We Saw</p>
+              <p class="leading-relaxed">Hospital medical alert systems flood doctors with thousands of repetitive popups every shift. Clinicians quickly develop alert fatigue, making it easy to accidentally click past a critical drug interaction warning.</p>
             </div>
 
             <div>
-              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">Solution &amp; Execution</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-2">What I Personally Built &amp; Owned</p>
               <ul class="modal-bullet-list list-disc">
-                <li><span class="highlight-text">RL Fine-Tuning:</span> Fine-tuned GPT-4 models using reinforcement learning against medical interaction databases.</li>
-                <li><span class="highlight-text">Clinical Verification UI:</span> Designed a streamlined interface that categorizes risk severity to eliminate unnecessary visual noise.</li>
+                <li><span class="highlight-text">RL Model Fine-Tuning:</span> I helped fine-tune GPT-4 models using reinforcement learning techniques to accurately weigh prescription interaction severity based on patient history.</li>
+                <li><span class="highlight-text">Validation Logic:</span> I developed backend validation handlers in Python to verify allergy conflicts, dosage boundaries, and multi-drug interaction matrices in real time.</li>
+                <li><span class="highlight-text">High-Contrast Clinical UI:</span> I designed a high-contrast React interface that highlights urgent prescription alerts while suppressing unnecessary UI clutter.</li>
               </ul>
             </div>
 
             <div>
-              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-1">Impact &amp; Validation</p>
-              <p>Won <strong>1st Place</strong> in the Patient Safety Challenge at Hack-a-StartUp and advanced as <strong>National Semi-Finalists</strong> in the Patient Safety Challenge Grand Awards.</p>
+              <p class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-2">Key Takeaways &amp; What I Learned</p>
+              <p class="leading-relaxed"><strong class="text-slate-900 dark:text-white">In high-stakes domains, interface hierarchy saves lives.</strong> Working on healthcare software taught me that UI design isn't just aesthetic—reducing visual noise directly influences critical decision-making under stress.</p>
             </div>
           </div>
         `
